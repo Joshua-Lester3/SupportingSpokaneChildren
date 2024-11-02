@@ -3,6 +3,11 @@ import * as $models from './models.g'
 import { ModelApiClient, ServiceApiClient } from 'coalesce-vue/lib/api-client'
 import type { AxiosPromise, AxiosRequestConfig, ItemResult, ListResult } from 'coalesce-vue/lib/api-client'
 
+export class AnnouncementApiClient extends ModelApiClient<$models.Announcement> {
+  constructor() { super($metadata.Announcement) }
+}
+
+
 export class AuditLogApiClient extends ModelApiClient<$models.AuditLog> {
   constructor() { super($metadata.AuditLog) }
 }
@@ -10,6 +15,21 @@ export class AuditLogApiClient extends ModelApiClient<$models.AuditLog> {
 
 export class AuditLogPropertyApiClient extends ModelApiClient<$models.AuditLogProperty> {
   constructor() { super($metadata.AuditLogProperty) }
+}
+
+
+export class EventApiClient extends ModelApiClient<$models.Event> {
+  constructor() { super($metadata.Event) }
+}
+
+
+export class ResourceApiClient extends ModelApiClient<$models.Resource> {
+  constructor() { super($metadata.Resource) }
+}
+
+
+export class ResourceCategoryApiClient extends ModelApiClient<$models.ResourceCategory> {
+  constructor() { super($metadata.ResourceCategory) }
 }
 
 
@@ -34,11 +54,6 @@ export class UserApiClient extends ModelApiClient<$models.User> {
 
 export class UserRoleApiClient extends ModelApiClient<$models.UserRole> {
   constructor() { super($metadata.UserRole) }
-}
-
-
-export class WidgetApiClient extends ModelApiClient<$models.Widget> {
-  constructor() { super($metadata.Widget) }
 }
 
 

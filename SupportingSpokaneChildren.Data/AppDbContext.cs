@@ -1,12 +1,7 @@
-using SupportingSpokaneChildren.Data.Coalesce;
 using IntelliTect.Coalesce.AuditLogging;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
-using System.Linq.Expressions;
 using System.Security.Cryptography;
 
 namespace SupportingSpokaneChildren.Data;
@@ -35,11 +30,12 @@ public class AppDbContext
 
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
     public DbSet<AuditLogProperty> AuditLogProperties => Set<AuditLogProperty>();
-
+    public DbSet<Announcement> Announcements => Set<Announcement>();
+    public DbSet<Event> Events => Set<Event>();
+    public DbSet<Resource> Resources => Set<Resource>();
+    public DbSet<ResourceCategory> ResourceCategories => Set<ResourceCategory>();
 
     public DbSet<UserPhoto> UserPhotos => Set<UserPhoto>();
-
-    public DbSet<Widget> Widgets => Set<Widget>();
 
     [InternalUse]
     public DbSet<DataProtectionKey> DataProtectionKeys => Set<DataProtectionKey>();

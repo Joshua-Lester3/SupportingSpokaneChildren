@@ -37,7 +37,7 @@ namespace SupportingSpokaneChildren.Web.Api
         /// Method: WhoAmI
         /// </summary>
         [HttpGet("WhoAmI")]
-        [Authorize]
+        [AllowAnonymous]
         public virtual ItemResult<UserInfoResponse> WhoAmI(
             [FromServices] SupportingSpokaneChildren.Data.AppDbContext db)
         {

@@ -20,10 +20,31 @@ export enum Permission {
 }
 
 
-export enum WidgetCategory {
-  Whizbangs = 0,
-  Sprecklesprockets = 1,
-  Discombobulators = 2,
+export interface Announcement extends Model<typeof metadata.Announcement> {
+  announcementId: string | null
+  title: string | null
+  description: string | null
+  datePosted: Date | null
+  imageUri: string | null
+}
+export class Announcement {
+  
+  /** Mutates the input object and its descendents into a valid Announcement implementation. */
+  static convert(data?: Partial<Announcement>): Announcement {
+    return convertToModel(data || {}, metadata.Announcement) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid Announcement implementation. */
+  static map(data?: Partial<Announcement>): Announcement {
+    return mapToModel(data || {}, metadata.Announcement) 
+  }
+  
+  static [Symbol.hasInstance](x: any) { return x?.$metadata === metadata.Announcement; }
+  
+  /** Instantiate a new Announcement, optionally basing it on the given data. */
+  constructor(data?: Partial<Announcement> | {[k: string]: any}) {
+    Object.assign(this, Announcement.map(data || {}));
+  }
 }
 
 
@@ -88,6 +109,92 @@ export class AuditLogProperty {
   /** Instantiate a new AuditLogProperty, optionally basing it on the given data. */
   constructor(data?: Partial<AuditLogProperty> | {[k: string]: any}) {
     Object.assign(this, AuditLogProperty.map(data || {}));
+  }
+}
+
+
+export interface Event extends Model<typeof metadata.Event> {
+  eventId: string | null
+  eventName: string | null
+  description: string | null
+  dateTime: Date | null
+  location: string | null
+  link: string | null
+  imageUri: string | null
+}
+export class Event {
+  
+  /** Mutates the input object and its descendents into a valid Event implementation. */
+  static convert(data?: Partial<Event>): Event {
+    return convertToModel(data || {}, metadata.Event) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid Event implementation. */
+  static map(data?: Partial<Event>): Event {
+    return mapToModel(data || {}, metadata.Event) 
+  }
+  
+  static [Symbol.hasInstance](x: any) { return x?.$metadata === metadata.Event; }
+  
+  /** Instantiate a new Event, optionally basing it on the given data. */
+  constructor(data?: Partial<Event> | {[k: string]: any}) {
+    Object.assign(this, Event.map(data || {}));
+  }
+}
+
+
+export interface Resource extends Model<typeof metadata.Resource> {
+  resourceId: string | null
+  name: string | null
+  website: string | null
+  phone: string | null
+  address: string | null
+  email: string | null
+  resourceCategoryId: string | null
+  resourceCategory: ResourceCategory | null
+}
+export class Resource {
+  
+  /** Mutates the input object and its descendents into a valid Resource implementation. */
+  static convert(data?: Partial<Resource>): Resource {
+    return convertToModel(data || {}, metadata.Resource) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid Resource implementation. */
+  static map(data?: Partial<Resource>): Resource {
+    return mapToModel(data || {}, metadata.Resource) 
+  }
+  
+  static [Symbol.hasInstance](x: any) { return x?.$metadata === metadata.Resource; }
+  
+  /** Instantiate a new Resource, optionally basing it on the given data. */
+  constructor(data?: Partial<Resource> | {[k: string]: any}) {
+    Object.assign(this, Resource.map(data || {}));
+  }
+}
+
+
+export interface ResourceCategory extends Model<typeof metadata.ResourceCategory> {
+  resourceCategoryId: string | null
+  categoryName: string | null
+}
+export class ResourceCategory {
+  
+  /** Mutates the input object and its descendents into a valid ResourceCategory implementation. */
+  static convert(data?: Partial<ResourceCategory>): ResourceCategory {
+    return convertToModel(data || {}, metadata.ResourceCategory) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid ResourceCategory implementation. */
+  static map(data?: Partial<ResourceCategory>): ResourceCategory {
+    return mapToModel(data || {}, metadata.ResourceCategory) 
+  }
+  
+  static [Symbol.hasInstance](x: any) { return x?.$metadata === metadata.ResourceCategory; }
+  
+  /** Instantiate a new ResourceCategory, optionally basing it on the given data. */
+  constructor(data?: Partial<ResourceCategory> | {[k: string]: any}) {
+    Object.assign(this, ResourceCategory.map(data || {}));
   }
 }
 
@@ -199,39 +306,6 @@ export namespace UserRole {
 }
 
 
-export interface Widget extends Model<typeof metadata.Widget> {
-  widgetId: number | null
-  name: string | null
-  category: WidgetCategory | null
-  inventedOn: Date | null
-  modifiedBy: User | null
-  modifiedById: string | null
-  modifiedOn: Date | null
-  createdBy: User | null
-  createdById: string | null
-  createdOn: Date | null
-}
-export class Widget {
-  
-  /** Mutates the input object and its descendents into a valid Widget implementation. */
-  static convert(data?: Partial<Widget>): Widget {
-    return convertToModel(data || {}, metadata.Widget) 
-  }
-  
-  /** Maps the input object and its descendents to a new, valid Widget implementation. */
-  static map(data?: Partial<Widget>): Widget {
-    return mapToModel(data || {}, metadata.Widget) 
-  }
-  
-  static [Symbol.hasInstance](x: any) { return x?.$metadata === metadata.Widget; }
-  
-  /** Instantiate a new Widget, optionally basing it on the given data. */
-  constructor(data?: Partial<Widget> | {[k: string]: any}) {
-    Object.assign(this, Widget.map(data || {}));
-  }
-}
-
-
 export interface UserInfo extends Model<typeof metadata.UserInfo> {
   id: string | null
   userName: string | null
@@ -265,15 +339,17 @@ declare module "coalesce-vue/lib/model" {
   interface EnumTypeLookup {
     AuditEntryState: AuditEntryState
     Permission: Permission
-    WidgetCategory: WidgetCategory
   }
   interface ModelTypeLookup {
+    Announcement: Announcement
     AuditLog: AuditLog
     AuditLogProperty: AuditLogProperty
+    Event: Event
+    Resource: Resource
+    ResourceCategory: ResourceCategory
     Role: Role
     User: User
     UserInfo: UserInfo
     UserRole: UserRole
-    Widget: Widget
   }
 }

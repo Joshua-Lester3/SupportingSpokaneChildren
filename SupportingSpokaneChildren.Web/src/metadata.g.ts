@@ -53,27 +53,60 @@ export const Permission = domain.enums.Permission = {
   },
   ]),
 }
-export const WidgetCategory = domain.enums.WidgetCategory = {
-  name: "WidgetCategory" as const,
-  displayName: "Widget Category",
-  type: "enum",
-  ...getEnumMeta<"Whizbangs"|"Sprecklesprockets"|"Discombobulators">([
-  {
-    value: 0,
-    strValue: "Whizbangs",
-    displayName: "Whizbangs",
+export const Announcement = domain.types.Announcement = {
+  name: "Announcement" as const,
+  displayName: "Announcement",
+  get displayProp() { return this.props.title }, 
+  type: "model",
+  controllerRoute: "Announcement",
+  get keyProp() { return this.props.announcementId }, 
+  behaviorFlags: 7 as BehaviorFlags,
+  props: {
+    announcementId: {
+      name: "announcementId",
+      displayName: "Announcement Id",
+      type: "string",
+      role: "primaryKey",
+      hidden: 3 as HiddenAreas,
+      createOnly: true,
+    },
+    title: {
+      name: "title",
+      displayName: "Title",
+      type: "string",
+      role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "Title is required.",
+      }
+    },
+    description: {
+      name: "description",
+      displayName: "Description",
+      type: "string",
+      role: "value",
+    },
+    datePosted: {
+      name: "datePosted",
+      displayName: "Date Posted",
+      type: "date",
+      dateKind: "datetime",
+      noOffset: true,
+      role: "value",
+      hidden: 2 as HiddenAreas,
+      dontSerialize: true,
+    },
+    imageUri: {
+      name: "imageUri",
+      displayName: "Image Uri",
+      type: "string",
+      role: "value",
+      hidden: 3 as HiddenAreas,
+    },
   },
-  {
-    value: 1,
-    strValue: "Sprecklesprockets",
-    displayName: "Sprecklesprockets",
+  methods: {
   },
-  {
-    value: 2,
-    strValue: "Discombobulators",
-    displayName: "Discombobulators",
+  dataSources: {
   },
-  ]),
 }
 export const AuditLog = domain.types.AuditLog = {
   name: "AuditLog" as const,
@@ -246,6 +279,185 @@ export const AuditLogProperty = domain.types.AuditLogProperty = {
       displayName: "New Value Description",
       type: "string",
       role: "value",
+    },
+  },
+  methods: {
+  },
+  dataSources: {
+  },
+}
+export const Event = domain.types.Event = {
+  name: "Event" as const,
+  displayName: "Event",
+  get displayProp() { return this.props.eventName }, 
+  type: "model",
+  controllerRoute: "Event",
+  get keyProp() { return this.props.eventId }, 
+  behaviorFlags: 7 as BehaviorFlags,
+  props: {
+    eventId: {
+      name: "eventId",
+      displayName: "Event Id",
+      type: "string",
+      role: "primaryKey",
+      hidden: 3 as HiddenAreas,
+      createOnly: true,
+    },
+    eventName: {
+      name: "eventName",
+      displayName: "Event Name",
+      type: "string",
+      role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "Event Name is required.",
+      }
+    },
+    description: {
+      name: "description",
+      displayName: "Description",
+      type: "string",
+      role: "value",
+    },
+    dateTime: {
+      name: "dateTime",
+      displayName: "Date Time",
+      type: "date",
+      dateKind: "datetime",
+      noOffset: true,
+      role: "value",
+    },
+    location: {
+      name: "location",
+      displayName: "Location",
+      type: "string",
+      role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "Location is required.",
+      }
+    },
+    link: {
+      name: "link",
+      displayName: "Link",
+      type: "string",
+      role: "value",
+    },
+    imageUri: {
+      name: "imageUri",
+      displayName: "Image Uri",
+      type: "string",
+      role: "value",
+      hidden: 3 as HiddenAreas,
+    },
+  },
+  methods: {
+  },
+  dataSources: {
+  },
+}
+export const Resource = domain.types.Resource = {
+  name: "Resource" as const,
+  displayName: "Resource",
+  get displayProp() { return this.props.name }, 
+  type: "model",
+  controllerRoute: "Resource",
+  get keyProp() { return this.props.resourceId }, 
+  behaviorFlags: 7 as BehaviorFlags,
+  props: {
+    resourceId: {
+      name: "resourceId",
+      displayName: "Resource Id",
+      type: "string",
+      role: "primaryKey",
+      hidden: 3 as HiddenAreas,
+      createOnly: true,
+    },
+    name: {
+      name: "name",
+      displayName: "Name",
+      type: "string",
+      role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "Name is required.",
+      }
+    },
+    website: {
+      name: "website",
+      displayName: "Website",
+      type: "string",
+      role: "value",
+    },
+    phone: {
+      name: "phone",
+      displayName: "Phone",
+      type: "string",
+      role: "value",
+    },
+    address: {
+      name: "address",
+      displayName: "Address",
+      type: "string",
+      role: "value",
+    },
+    email: {
+      name: "email",
+      displayName: "Email",
+      type: "string",
+      role: "value",
+    },
+    resourceCategoryId: {
+      name: "resourceCategoryId",
+      displayName: "Resource Category Id",
+      type: "string",
+      role: "foreignKey",
+      get principalKey() { return (domain.types.ResourceCategory as ModelType & { name: "ResourceCategory" }).props.resourceCategoryId as PrimaryKeyProperty },
+      get principalType() { return (domain.types.ResourceCategory as ModelType & { name: "ResourceCategory" }) },
+      get navigationProp() { return (domain.types.Resource as ModelType & { name: "Resource" }).props.resourceCategory as ModelReferenceNavigationProperty },
+      hidden: 3 as HiddenAreas,
+      rules: {
+        required: val => (val != null && val !== '') || "Resource Category is required.",
+      }
+    },
+    resourceCategory: {
+      name: "resourceCategory",
+      displayName: "Resource Category",
+      type: "model",
+      get typeDef() { return (domain.types.ResourceCategory as ModelType & { name: "ResourceCategory" }) },
+      role: "referenceNavigation",
+      get foreignKey() { return (domain.types.Resource as ModelType & { name: "Resource" }).props.resourceCategoryId as ForeignKeyProperty },
+      get principalKey() { return (domain.types.ResourceCategory as ModelType & { name: "ResourceCategory" }).props.resourceCategoryId as PrimaryKeyProperty },
+      dontSerialize: true,
+    },
+  },
+  methods: {
+  },
+  dataSources: {
+  },
+}
+export const ResourceCategory = domain.types.ResourceCategory = {
+  name: "ResourceCategory" as const,
+  displayName: "Resource Category",
+  get displayProp() { return this.props.categoryName }, 
+  type: "model",
+  controllerRoute: "ResourceCategory",
+  get keyProp() { return this.props.resourceCategoryId }, 
+  behaviorFlags: 7 as BehaviorFlags,
+  props: {
+    resourceCategoryId: {
+      name: "resourceCategoryId",
+      displayName: "Resource Category Id",
+      type: "string",
+      role: "primaryKey",
+      hidden: 3 as HiddenAreas,
+      createOnly: true,
+    },
+    categoryName: {
+      name: "categoryName",
+      displayName: "Category Name",
+      type: "string",
+      role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "Category Name is required.",
+      }
     },
   },
   methods: {
@@ -526,113 +738,6 @@ export const UserRole = domain.types.UserRole = {
     },
   },
 }
-export const Widget = domain.types.Widget = {
-  name: "Widget" as const,
-  displayName: "Widget",
-  description: "A sample model provided by the Coalesce template. Remove this when you start building your real data model.",
-  get displayProp() { return this.props.name }, 
-  type: "model",
-  controllerRoute: "Widget",
-  get keyProp() { return this.props.widgetId }, 
-  behaviorFlags: 7 as BehaviorFlags,
-  props: {
-    widgetId: {
-      name: "widgetId",
-      displayName: "Widget Id",
-      type: "number",
-      role: "primaryKey",
-      hidden: 3 as HiddenAreas,
-    },
-    name: {
-      name: "name",
-      displayName: "Name",
-      type: "string",
-      role: "value",
-      rules: {
-        required: val => (val != null && val !== '') || "Name is required.",
-      }
-    },
-    category: {
-      name: "category",
-      displayName: "Category",
-      type: "enum",
-      get typeDef() { return WidgetCategory },
-      role: "value",
-      rules: {
-        required: val => val != null || "Category is required.",
-      }
-    },
-    inventedOn: {
-      name: "inventedOn",
-      displayName: "Invented On",
-      type: "date",
-      dateKind: "datetime",
-      role: "value",
-    },
-    modifiedById: {
-      name: "modifiedById",
-      displayName: "Modified By Id",
-      type: "string",
-      role: "foreignKey",
-      get principalKey() { return (domain.types.User as ModelType & { name: "User" }).props.id as PrimaryKeyProperty },
-      get principalType() { return (domain.types.User as ModelType & { name: "User" }) },
-      get navigationProp() { return (domain.types.Widget as ModelType & { name: "Widget" }).props.modifiedBy as ModelReferenceNavigationProperty },
-      hidden: 3 as HiddenAreas,
-      dontSerialize: true,
-    },
-    createdById: {
-      name: "createdById",
-      displayName: "Created By Id",
-      type: "string",
-      role: "foreignKey",
-      get principalKey() { return (domain.types.User as ModelType & { name: "User" }).props.id as PrimaryKeyProperty },
-      get principalType() { return (domain.types.User as ModelType & { name: "User" }) },
-      get navigationProp() { return (domain.types.Widget as ModelType & { name: "Widget" }).props.createdBy as ModelReferenceNavigationProperty },
-      hidden: 3 as HiddenAreas,
-      dontSerialize: true,
-    },
-    createdBy: {
-      name: "createdBy",
-      displayName: "Created By",
-      type: "model",
-      get typeDef() { return (domain.types.User as ModelType & { name: "User" }) },
-      role: "referenceNavigation",
-      get foreignKey() { return (domain.types.Widget as ModelType & { name: "Widget" }).props.createdById as ForeignKeyProperty },
-      get principalKey() { return (domain.types.User as ModelType & { name: "User" }).props.id as PrimaryKeyProperty },
-      dontSerialize: true,
-    },
-    createdOn: {
-      name: "createdOn",
-      displayName: "Created On",
-      type: "date",
-      dateKind: "datetime",
-      role: "value",
-      dontSerialize: true,
-    },
-    modifiedBy: {
-      name: "modifiedBy",
-      displayName: "Modified By",
-      type: "model",
-      get typeDef() { return (domain.types.User as ModelType & { name: "User" }) },
-      role: "referenceNavigation",
-      get foreignKey() { return (domain.types.Widget as ModelType & { name: "Widget" }).props.modifiedById as ForeignKeyProperty },
-      get principalKey() { return (domain.types.User as ModelType & { name: "User" }).props.id as PrimaryKeyProperty },
-      dontSerialize: true,
-    },
-    modifiedOn: {
-      name: "modifiedOn",
-      displayName: "Modified On",
-      type: "date",
-      dateKind: "datetime",
-      role: "value",
-      dontSerialize: true,
-    },
-  },
-  methods: {
-  },
-  dataSources: {
-  },
-}
 export const UserInfo = domain.types.UserInfo = {
   name: "UserInfo" as const,
   displayName: "User Info",
@@ -716,16 +821,18 @@ interface AppDomain extends Domain {
   enums: {
     AuditEntryState: typeof AuditEntryState
     Permission: typeof Permission
-    WidgetCategory: typeof WidgetCategory
   }
   types: {
+    Announcement: typeof Announcement
     AuditLog: typeof AuditLog
     AuditLogProperty: typeof AuditLogProperty
+    Event: typeof Event
+    Resource: typeof Resource
+    ResourceCategory: typeof ResourceCategory
     Role: typeof Role
     User: typeof User
     UserInfo: typeof UserInfo
     UserRole: typeof UserRole
-    Widget: typeof Widget
   }
   services: {
     SecurityService: typeof SecurityService

@@ -1,10 +1,12 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
+
 namespace SupportingSpokaneChildren.Data.Auth;
 
 [Coalesce, Service]
 public class SecurityService()
 {
-    [Coalesce, Execute(HttpMethod = HttpMethod.Get)]
+    [Coalesce, Execute(HttpMethod = HttpMethod.Get, PermissionLevel = SecurityPermissionLevels.AllowAll)]
     public UserInfo WhoAmI(ClaimsPrincipal user, AppDbContext db)
     {
 

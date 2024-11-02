@@ -4,9 +4,9 @@ using System.ComponentModel;
 
 namespace SupportingSpokaneChildren.Data.Models;
 
-[Create(nameof(Permission.UserAdmin))]
-[Edit(nameof(Permission.UserAdmin))]
-[Delete(nameof(Permission.UserAdmin))]
+[Create(Roles = Roles.UserAdmin)]
+[Edit(Roles = Roles.UserAdmin)]
+[Delete(Roles = Roles.UserAdmin)]
 [Description("Roles are groups of permissions, analogous to job titles or functions.")]
 public class Role
     : IdentityRole

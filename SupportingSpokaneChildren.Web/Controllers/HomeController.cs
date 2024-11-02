@@ -17,7 +17,7 @@ public class HomeController() : Controller
     /// the links to compiled js/css that include hashes in the filenames.
     /// </remarks>
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-    [Authorize]
+    [AllowAnonymous]
     public async Task<IActionResult> Index(
         [FromServices] IWebHostEnvironment hostingEnvironment
     )

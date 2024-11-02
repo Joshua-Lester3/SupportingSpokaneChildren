@@ -3,6 +3,29 @@ import * as $models from './models.g'
 import * as $apiClients from './api-clients.g'
 import { ViewModel, ListViewModel, ViewModelCollection, ServiceViewModel, type DeepPartial, defineProps } from 'coalesce-vue/lib/viewmodel'
 
+export interface AnnouncementViewModel extends $models.Announcement {
+  announcementId: string | null;
+  title: string | null;
+  description: string | null;
+  datePosted: Date | null;
+  imageUri: string | null;
+}
+export class AnnouncementViewModel extends ViewModel<$models.Announcement, $apiClients.AnnouncementApiClient, string> implements $models.Announcement  {
+  
+  constructor(initialData?: DeepPartial<$models.Announcement> | null) {
+    super($metadata.Announcement, new $apiClients.AnnouncementApiClient(), initialData)
+  }
+}
+defineProps(AnnouncementViewModel, $metadata.Announcement)
+
+export class AnnouncementListViewModel extends ListViewModel<$models.Announcement, $apiClients.AnnouncementApiClient, AnnouncementViewModel> {
+  
+  constructor() {
+    super($metadata.Announcement, new $apiClients.AnnouncementApiClient())
+  }
+}
+
+
 export interface AuditLogViewModel extends $models.AuditLog {
   userId: string | null;
   get user(): UserViewModel | null;
@@ -61,6 +84,78 @@ export class AuditLogPropertyListViewModel extends ListViewModel<$models.AuditLo
   
   constructor() {
     super($metadata.AuditLogProperty, new $apiClients.AuditLogPropertyApiClient())
+  }
+}
+
+
+export interface EventViewModel extends $models.Event {
+  eventId: string | null;
+  eventName: string | null;
+  description: string | null;
+  dateTime: Date | null;
+  location: string | null;
+  link: string | null;
+  imageUri: string | null;
+}
+export class EventViewModel extends ViewModel<$models.Event, $apiClients.EventApiClient, string> implements $models.Event  {
+  
+  constructor(initialData?: DeepPartial<$models.Event> | null) {
+    super($metadata.Event, new $apiClients.EventApiClient(), initialData)
+  }
+}
+defineProps(EventViewModel, $metadata.Event)
+
+export class EventListViewModel extends ListViewModel<$models.Event, $apiClients.EventApiClient, EventViewModel> {
+  
+  constructor() {
+    super($metadata.Event, new $apiClients.EventApiClient())
+  }
+}
+
+
+export interface ResourceViewModel extends $models.Resource {
+  resourceId: string | null;
+  name: string | null;
+  website: string | null;
+  phone: string | null;
+  address: string | null;
+  email: string | null;
+  resourceCategoryId: string | null;
+  get resourceCategory(): ResourceCategoryViewModel | null;
+  set resourceCategory(value: ResourceCategoryViewModel | $models.ResourceCategory | null);
+}
+export class ResourceViewModel extends ViewModel<$models.Resource, $apiClients.ResourceApiClient, string> implements $models.Resource  {
+  
+  constructor(initialData?: DeepPartial<$models.Resource> | null) {
+    super($metadata.Resource, new $apiClients.ResourceApiClient(), initialData)
+  }
+}
+defineProps(ResourceViewModel, $metadata.Resource)
+
+export class ResourceListViewModel extends ListViewModel<$models.Resource, $apiClients.ResourceApiClient, ResourceViewModel> {
+  
+  constructor() {
+    super($metadata.Resource, new $apiClients.ResourceApiClient())
+  }
+}
+
+
+export interface ResourceCategoryViewModel extends $models.ResourceCategory {
+  resourceCategoryId: string | null;
+  categoryName: string | null;
+}
+export class ResourceCategoryViewModel extends ViewModel<$models.ResourceCategory, $apiClients.ResourceCategoryApiClient, string> implements $models.ResourceCategory  {
+  
+  constructor(initialData?: DeepPartial<$models.ResourceCategory> | null) {
+    super($metadata.ResourceCategory, new $apiClients.ResourceCategoryApiClient(), initialData)
+  }
+}
+defineProps(ResourceCategoryViewModel, $metadata.ResourceCategory)
+
+export class ResourceCategoryListViewModel extends ListViewModel<$models.ResourceCategory, $apiClients.ResourceCategoryApiClient, ResourceCategoryViewModel> {
+  
+  constructor() {
+    super($metadata.ResourceCategory, new $apiClients.ResourceCategoryApiClient())
   }
 }
 
@@ -168,36 +263,6 @@ export class UserRoleListViewModel extends ListViewModel<$models.UserRole, $apiC
 }
 
 
-export interface WidgetViewModel extends $models.Widget {
-  widgetId: number | null;
-  name: string | null;
-  category: $models.WidgetCategory | null;
-  inventedOn: Date | null;
-  get modifiedBy(): UserViewModel | null;
-  set modifiedBy(value: UserViewModel | $models.User | null);
-  modifiedById: string | null;
-  modifiedOn: Date | null;
-  get createdBy(): UserViewModel | null;
-  set createdBy(value: UserViewModel | $models.User | null);
-  createdById: string | null;
-  createdOn: Date | null;
-}
-export class WidgetViewModel extends ViewModel<$models.Widget, $apiClients.WidgetApiClient, number> implements $models.Widget  {
-  
-  constructor(initialData?: DeepPartial<$models.Widget> | null) {
-    super($metadata.Widget, new $apiClients.WidgetApiClient(), initialData)
-  }
-}
-defineProps(WidgetViewModel, $metadata.Widget)
-
-export class WidgetListViewModel extends ListViewModel<$models.Widget, $apiClients.WidgetApiClient, WidgetViewModel> {
-  
-  constructor() {
-    super($metadata.Widget, new $apiClients.WidgetApiClient())
-  }
-}
-
-
 export class SecurityServiceViewModel extends ServiceViewModel<typeof $metadata.SecurityService, $apiClients.SecurityServiceApiClient> {
   
   public get whoAmI() {
@@ -218,20 +283,26 @@ export class SecurityServiceViewModel extends ServiceViewModel<typeof $metadata.
 
 
 const viewModelTypeLookup = ViewModel.typeLookup = {
+  Announcement: AnnouncementViewModel,
   AuditLog: AuditLogViewModel,
   AuditLogProperty: AuditLogPropertyViewModel,
+  Event: EventViewModel,
+  Resource: ResourceViewModel,
+  ResourceCategory: ResourceCategoryViewModel,
   Role: RoleViewModel,
   User: UserViewModel,
   UserRole: UserRoleViewModel,
-  Widget: WidgetViewModel,
 }
 const listViewModelTypeLookup = ListViewModel.typeLookup = {
+  Announcement: AnnouncementListViewModel,
   AuditLog: AuditLogListViewModel,
   AuditLogProperty: AuditLogPropertyListViewModel,
+  Event: EventListViewModel,
+  Resource: ResourceListViewModel,
+  ResourceCategory: ResourceCategoryListViewModel,
   Role: RoleListViewModel,
   User: UserListViewModel,
   UserRole: UserRoleListViewModel,
-  Widget: WidgetListViewModel,
 }
 const serviceViewModelTypeLookup = ServiceViewModel.typeLookup = {
   SecurityService: SecurityServiceViewModel,

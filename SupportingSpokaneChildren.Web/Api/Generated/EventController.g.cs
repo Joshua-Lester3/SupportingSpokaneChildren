@@ -21,75 +21,75 @@ using System.Threading.Tasks;
 
 namespace SupportingSpokaneChildren.Web.Api
 {
-    [Route("api/Widget")]
+    [Route("api/Event")]
     [Authorize]
     [ServiceFilter(typeof(IApiActionFilter))]
-    public partial class WidgetController
-        : BaseApiController<SupportingSpokaneChildren.Data.Models.Widget, WidgetParameter, WidgetResponse, SupportingSpokaneChildren.Data.AppDbContext>
+    public partial class EventController
+        : BaseApiController<SupportingSpokaneChildren.Data.Models.Event, EventParameter, EventResponse, SupportingSpokaneChildren.Data.AppDbContext>
     {
-        public WidgetController(CrudContext<SupportingSpokaneChildren.Data.AppDbContext> context) : base(context)
+        public EventController(CrudContext<SupportingSpokaneChildren.Data.AppDbContext> context) : base(context)
         {
-            GeneratedForClassViewModel = context.ReflectionRepository.GetClassViewModel<SupportingSpokaneChildren.Data.Models.Widget>();
+            GeneratedForClassViewModel = context.ReflectionRepository.GetClassViewModel<SupportingSpokaneChildren.Data.Models.Event>();
         }
 
         [HttpGet("get/{id}")]
-        [Authorize]
-        public virtual Task<ItemResult<WidgetResponse>> Get(
-            int id,
+        [AllowAnonymous]
+        public virtual Task<ItemResult<EventResponse>> Get(
+            string id,
             [FromQuery] DataSourceParameters parameters,
-            IDataSource<SupportingSpokaneChildren.Data.Models.Widget> dataSource)
+            IDataSource<SupportingSpokaneChildren.Data.Models.Event> dataSource)
             => GetImplementation(id, parameters, dataSource);
 
         [HttpGet("list")]
-        [Authorize]
-        public virtual Task<ListResult<WidgetResponse>> List(
+        [AllowAnonymous]
+        public virtual Task<ListResult<EventResponse>> List(
             [FromQuery] ListParameters parameters,
-            IDataSource<SupportingSpokaneChildren.Data.Models.Widget> dataSource)
+            IDataSource<SupportingSpokaneChildren.Data.Models.Event> dataSource)
             => ListImplementation(parameters, dataSource);
 
         [HttpGet("count")]
-        [Authorize]
+        [AllowAnonymous]
         public virtual Task<ItemResult<int>> Count(
             [FromQuery] FilterParameters parameters,
-            IDataSource<SupportingSpokaneChildren.Data.Models.Widget> dataSource)
+            IDataSource<SupportingSpokaneChildren.Data.Models.Event> dataSource)
             => CountImplementation(parameters, dataSource);
 
         [HttpPost("save")]
         [Consumes("application/x-www-form-urlencoded", "multipart/form-data")]
-        [Authorize]
-        public virtual Task<ItemResult<WidgetResponse>> Save(
-            [FromForm] WidgetParameter dto,
+        [Authorize(Roles = "Moderator")]
+        public virtual Task<ItemResult<EventResponse>> Save(
+            [FromForm] EventParameter dto,
             [FromQuery] DataSourceParameters parameters,
-            IDataSource<SupportingSpokaneChildren.Data.Models.Widget> dataSource,
-            IBehaviors<SupportingSpokaneChildren.Data.Models.Widget> behaviors)
+            IDataSource<SupportingSpokaneChildren.Data.Models.Event> dataSource,
+            IBehaviors<SupportingSpokaneChildren.Data.Models.Event> behaviors)
             => SaveImplementation(dto, parameters, dataSource, behaviors);
 
         [HttpPost("save")]
         [Consumes("application/json")]
-        [Authorize]
-        public virtual Task<ItemResult<WidgetResponse>> SaveFromJson(
-            [FromBody] WidgetParameter dto,
+        [Authorize(Roles = "Moderator")]
+        public virtual Task<ItemResult<EventResponse>> SaveFromJson(
+            [FromBody] EventParameter dto,
             [FromQuery] DataSourceParameters parameters,
-            IDataSource<SupportingSpokaneChildren.Data.Models.Widget> dataSource,
-            IBehaviors<SupportingSpokaneChildren.Data.Models.Widget> behaviors)
+            IDataSource<SupportingSpokaneChildren.Data.Models.Event> dataSource,
+            IBehaviors<SupportingSpokaneChildren.Data.Models.Event> behaviors)
             => SaveImplementation(dto, parameters, dataSource, behaviors);
 
         [HttpPost("bulkSave")]
-        [Authorize]
-        public virtual Task<ItemResult<WidgetResponse>> BulkSave(
+        [AllowAnonymous]
+        public virtual Task<ItemResult<EventResponse>> BulkSave(
             [FromBody] BulkSaveRequest dto,
             [FromQuery] DataSourceParameters parameters,
-            IDataSource<SupportingSpokaneChildren.Data.Models.Widget> dataSource,
+            IDataSource<SupportingSpokaneChildren.Data.Models.Event> dataSource,
             [FromServices] IDataSourceFactory dataSourceFactory,
             [FromServices] IBehaviorsFactory behaviorsFactory)
             => BulkSaveImplementation(dto, parameters, dataSource, dataSourceFactory, behaviorsFactory);
 
         [HttpPost("delete/{id}")]
-        [Authorize]
-        public virtual Task<ItemResult<WidgetResponse>> Delete(
-            int id,
-            IBehaviors<SupportingSpokaneChildren.Data.Models.Widget> behaviors,
-            IDataSource<SupportingSpokaneChildren.Data.Models.Widget> dataSource)
+        [Authorize(Roles = "Moderator")]
+        public virtual Task<ItemResult<EventResponse>> Delete(
+            string id,
+            IBehaviors<SupportingSpokaneChildren.Data.Models.Event> behaviors,
+            IDataSource<SupportingSpokaneChildren.Data.Models.Event> dataSource)
             => DeleteImplementation(id, new DataSourceParameters(), dataSource, behaviors);
     }
 }
