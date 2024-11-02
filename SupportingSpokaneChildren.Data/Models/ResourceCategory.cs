@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SupportingSpokaneChildren.Data.Models;
 
-[Create(Roles = Roles.Moderator)]
+[Create(nameof(Permission.Admin))]
 [Read(PermissionLevel = SecurityPermissionLevels.AllowAll)]
-[Edit(Roles = Roles.Moderator)]
-[Delete(Roles = Roles.Moderator)]
+[Edit(nameof(Permission.Admin))]
+[Delete(nameof(Permission.Admin))]
 public class ResourceCategory
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

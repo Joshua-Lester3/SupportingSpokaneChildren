@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SupportingSpokaneChildren.Data.Models;
 
-[Read(Roles = Roles.UserAdmin)]
+[Read(nameof(Permission.UserAdmin))]
 [Edit(DenyAll)] // Doesn't make sense to edit. 
-[Create(Roles = Roles.UserAdmin)]
-[Delete(Roles = Roles.UserAdmin)]
+[Create(nameof(Permission.UserAdmin))]
+[Delete(nameof(Permission.UserAdmin))]
 public class UserRole : IdentityUserRole<string>
 {
     // Fake PK for Coalesce since IdentityUserRole uses a composite PK.

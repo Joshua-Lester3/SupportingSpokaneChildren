@@ -14,14 +14,14 @@ public class DatabaseSeeder(AppDbContext db)
         {
             db.Roles.Add(new()
             {
-                //Permissions = Enum.GetValues<Permission>().ToList(),
+                Permissions = [Permission.UserAdmin],
                 Name = Roles.UserAdmin,
                 NormalizedName = Roles.UserAdmin.ToUpper(),
             });
 
             db.Roles.Add(new()
             {
-                //Permissions = Enum.GetValues<Permission>().ToList(),
+                Permissions = [Permission.Admin],
                 Name = Roles.Moderator,
                 NormalizedName = Roles.Moderator.ToUpper(),
             });

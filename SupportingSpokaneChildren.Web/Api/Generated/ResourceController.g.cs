@@ -56,7 +56,7 @@ namespace SupportingSpokaneChildren.Web.Api
 
         [HttpPost("save")]
         [Consumes("application/x-www-form-urlencoded", "multipart/form-data")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
         public virtual Task<ItemResult<ResourceResponse>> Save(
             [FromForm] ResourceParameter dto,
             [FromQuery] DataSourceParameters parameters,
@@ -66,7 +66,7 @@ namespace SupportingSpokaneChildren.Web.Api
 
         [HttpPost("save")]
         [Consumes("application/json")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
         public virtual Task<ItemResult<ResourceResponse>> SaveFromJson(
             [FromBody] ResourceParameter dto,
             [FromQuery] DataSourceParameters parameters,
@@ -85,7 +85,7 @@ namespace SupportingSpokaneChildren.Web.Api
             => BulkSaveImplementation(dto, parameters, dataSource, dataSourceFactory, behaviorsFactory);
 
         [HttpPost("delete/{id}")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
         public virtual Task<ItemResult<ResourceResponse>> Delete(
             string id,
             IBehaviors<SupportingSpokaneChildren.Data.Models.Resource> behaviors,

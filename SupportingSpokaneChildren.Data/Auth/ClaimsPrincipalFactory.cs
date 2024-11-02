@@ -22,21 +22,21 @@ public class ClaimsPrincipalFactory(
         // Store all the permissions in a dedicated identity
         // whose RoleClaimType is Permission so that they can still be treated like roles
         // (and so they work with IsInRole and coalesce attribute-based security).
-        //var permissions = (await db.Entry(user)
-        //    .Collection(u => u.UserRoles!)
-        //    .Query()
-        //    .Select(r => r.Role!)
-        //    .ToListAsync())
-        //    .SelectMany(role => role.Permissions!)
-        //    .Select(p => new Claim(AppClaimTypes.Permission, p.ToString()));
+        var permissions = (await db.Entry(user)
+            .Collection(u => u.UserRoles!)
+            .Query()
+            .Select(r => r.Role!)
+            .ToListAsync())
+            .SelectMany(role => role.Permissions!)
+            .Select(p => new Claim(AppClaimTypes.Permission, p.ToString()));
 
-        //var permissionIdentity = new ClaimsIdentity(
-        //    permissions, 
-        //    "Permissions",
-        //    Options.ClaimsIdentity.UserNameClaimType,
-        //    AppClaimTypes.Permission);
+        var permissionIdentity = new ClaimsIdentity(
+            permissions,
+            "Permissions",
+            Options.ClaimsIdentity.UserNameClaimType,
+            AppClaimTypes.Permission);
 
-        ClaimsPrincipal result = new([identity]);
+        ClaimsPrincipal result = new([identity, permissionIdentity]);
 
         return result;
     }

@@ -57,21 +57,21 @@ public class User : IdentityUser
     public override int AccessFailedCount { get; set; }
 
     [Description("If set, the user will be blocked from signing in until this date.")]
-    [Read(Roles = Roles.UserAdmin), Edit(Roles = Roles.UserAdmin)]
+    [Read(nameof(Permission.UserAdmin)), Edit(nameof(Permission.UserAdmin))]
     public override DateTimeOffset? LockoutEnd { get; set; }
 
     [Description("If enabled, the user can be locked out.")]
-    [Read(Roles = Roles.UserAdmin), Edit(Roles = Roles.UserAdmin)]
+    [Read(nameof(Permission.UserAdmin)), Edit(nameof(Permission.UserAdmin))]
     public override bool LockoutEnabled { get; set; }
 
-    [Read(Roles = Roles.UserAdmin, NoAutoInclude = true)]
+    [Read(nameof(Permission.UserAdmin), NoAutoInclude = true)]
     [InverseProperty(nameof(UserRole.User))]
     [ManyToMany("Roles")]
     [Hidden]
     public ICollection<UserRole>? UserRoles { get; set; }
 
     [Display(Name = "Roles")]
-    [Read(Roles = Roles.UserAdmin)]
+    [Read(nameof(Permission.UserAdmin))]
     public IEnumerable<string>? RoleNames => UserRoles?.Where(ur => ur.Role != null).Select(r => r.Role!.Name!);
 
 
@@ -93,7 +93,7 @@ public class User : IdentityUser
         public override IQueryable<User> GetQuery(IDataSourceParameters parameters)
         {
             var query = base.GetQuery(parameters);
-            if (User.IsInRole(Roles.UserAdmin))
+            if (User.Can(Permission.UserAdmin))
             {
                 query = query.Include(u => u.UserRoles!).ThenInclude(ur => ur.Role);
             }
@@ -111,7 +111,7 @@ public class User : IdentityUser
         public override ItemResult BeforeSave(SaveKind kind, User? oldItem, User item)
         {
             // Users who aren't user admins can only edit their own profile.
-            if (item.Id != User.GetUserId() && !User.IsInRole(Roles.UserAdmin)) return "Forbidden.";
+            if (item.Id != User.GetUserId() && !User.Can(Permission.UserAdmin)) return "Forbidden.";
 
             if (item.UserName != oldItem?.UserName)
             {
