@@ -14,6 +14,8 @@ using SupportingSpokaneChildren.Web.Auth;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -31,6 +33,17 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile("appsettings.localhost.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
+
+string keyVaultUri = builder.Configuration.GetSection("KeyVaultUri").Value ?? throw new InvalidOperationException("Could not find 'KeyVaultUri' in configuration.");
+builder.Configuration
+    .AddAzureKeyVault(
+        new Uri(keyVaultUri),
+        new DefaultAzureCredential(),
+        new AzureKeyVaultConfigurationOptions()
+        {
+            ReloadInterval = TimeSpan.FromMinutes(10)
+        });
+
 
 #region Configure Services
 
