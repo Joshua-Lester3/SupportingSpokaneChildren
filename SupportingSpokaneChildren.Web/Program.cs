@@ -38,11 +38,7 @@ string keyVaultUri = builder.Configuration.GetSection("KeyVaultUri").Value ?? th
 builder.Configuration
     .AddAzureKeyVault(
         new Uri(keyVaultUri),
-        new DefaultAzureCredential(),
-        new AzureKeyVaultConfigurationOptions()
-        {
-            ReloadInterval = TimeSpan.FromMinutes(10)
-        });
+        new DefaultAzureCredential());
 
 
 #region Configure Services
