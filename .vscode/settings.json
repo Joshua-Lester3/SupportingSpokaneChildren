@@ -1,0 +1,9 @@
+{
+  "typescript.tsdk": "SupportingSpokaneChildren.Web\\node_modules\\typescript\\lib",
+  "dotnet.defaultSolution": "SupportingSpokaneChildren.sln",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "cSpell.words": ["Vite", "unplugin", "iconsets", "viewmodels", "composables"]
+}

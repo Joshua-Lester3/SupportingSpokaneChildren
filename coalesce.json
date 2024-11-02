@@ -1,0 +1,16 @@
+{
+  "webProject": {
+    "projectFile": "./SupportingSpokaneChildren.Web/SupportingSpokaneChildren.Web.csproj"
+  },
+  "dataProject": {
+    "projectFile": "./SupportingSpokaneChildren.Data/SupportingSpokaneChildren.Data.csproj"
+  },
+
+  "rootGenerator": "Vue",
+
+  "generatorConfig": {
+    "Scripts": {
+      "targetDirectory": "../src"
+    }
+  }
+}

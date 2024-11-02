@@ -1,0 +1,24 @@
+﻿@page "/sign-in"
+@using Microsoft.AspNetCore.Authentication
+@model SupportingSpokaneChildren.Web.Pages.SignInModel
+@inject IAuthenticationSchemeProvider schemeProvider
+
+@{
+    var externalLogins = (await schemeProvider.GetAllSchemesAsync()).Where(s => s.DisplayName != null);
+
+    ViewData["Title"] = "Sign In";
+}
+
+<form method="post">
+    <input type="hidden" name="@nameof(Model.ReturnUrl)" value="@Model.ReturnUrl" />
+
+    <div class="d-grid gap-3">
+    @foreach (var provider in externalLogins)
+    {
+        <button type="submit" name="provider" value="@provider.Name" title="Log in with @provider.DisplayName" class="btn btn-outline-dark rounded-pill">
+            <img src="/@provider.Name-logo.svg" />
+            Sign in with @provider.DisplayName
+        </button>
+    }
+    </div>
+</form>
