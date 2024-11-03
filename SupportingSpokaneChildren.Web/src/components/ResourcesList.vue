@@ -4,19 +4,13 @@
       <v-card-title>Resources</v-card-title>
     </v-sheet>
     <v-list v-model:opened="open">
-      <v-list-group
-        v-for="category in resourceCategories.$items"
-        :key="category.$stableId"
-      >
+      <v-list-group v-for="category in resourceCategories.$items" :key="category.$stableId">
         <template #activator="{ props }">
           <v-list-item v-bind="props" :title="category.categoryName!" />
         </template>
         <!-- Filter resources based on matching resourceCategoryId -->
-        <v-list-item
-          v-for="resource in filteredResources(category.categoryName!)"
-          :key="resource.$stableId"
-          :title="resource.name!"
-        />
+        <v-list-item v-for="resource in filteredResources(category.resourceCategoryId!)" :key="resource.$stableId"
+          :title="resource.name!" />
       </v-list-group>
     </v-list>
   </v-card>
@@ -37,7 +31,7 @@ const resources = new ResourceListViewModel();
 resources.$load();
 
 // Function to filter resources by resourceCategoryId
-function filteredResources(resourceCategoryId) {
+function filteredResources(resourceCategoryId: string) {
   console.log("RCID: ", resourceCategoryId);
   return resources.$items.filter(
     (resource) => resource.resourceCategoryId === resourceCategoryId,
