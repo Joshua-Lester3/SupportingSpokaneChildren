@@ -76,15 +76,20 @@ const excludedTypes: Array<keyof typeof $metadata.types> = [
 ];
 
 const adminTypes = Object.values(($metadata as Domain).types).filter(
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore may be errors if the project has only model or only object types
   (t): t is ModelType =>
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore may be errors if the project has only model or only object types
     t.type == "model" && !excludedTypes.includes(t.name) && checkPermission(t),
 );
 
-function checkPermission(type: ModelType) {
-  if (type.displayName === "Role" || type.displayName === "User") {
-    const bool = userInfo.value.permissions?.includes("UserAdmin");
+function checkPermission(type: ModelType): boolean {
+  if (
+    type.displayName === "Role" ||
+    (type.displayName === "User" && userInfo.value.permissions !== null)
+  ) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore may be errors if the project has only model or only object types
+    const bool = userInfo.value.permissions.includes("UserAdmin");
     return bool;
   }
   return true;
