@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Azure.Identity;
 using Azure.Extensions.AspNetCore.Configuration.Secrets;
-using SupportingSpokaneChildren.Data.Services;
 using SupportingSpokaneChildren.Data.Blob;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -74,8 +73,10 @@ services
 
 builder.ConfigureAuthentication();
 
-
-services.AddScoped<ResourceService>();
+services.Configure<BlobOptions>(options =>
+{
+    options.BlobStorageConnectionString = builder.Configuration.GetSection("BlobStorageConnectionString").Value ?? throw new InvalidOperationException("Blob connection string isn't configured correctly.");
+});
 services.AddScoped<BlobStorageService>();
 services.AddScoped<SecurityService>();
 

@@ -15,7 +15,7 @@
       <v-card-text>
         <p>{{ announcement.description }}</p>
       </v-card-text>
-      <v-img class="mx-auto mt-2 mb-5" :width="400" src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" cover />
+      <v-img v-if="announcement.imageUri" class="mx-auto mt-2 mb-5" :width="400" :src="announcement.imageUri" cover />
     </v-card>
   </v-container>
 </template>

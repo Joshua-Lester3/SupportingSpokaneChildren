@@ -46,6 +46,14 @@ export class Announcement {
     Object.assign(this, Announcement.map(data || {}));
   }
 }
+export namespace Announcement {
+  export namespace DataSources {
+    
+    export class BlobLoader implements DataSource<typeof metadata.Announcement.dataSources.blobLoader> {
+      readonly $metadata = metadata.Announcement.dataSources.blobLoader
+    }
+  }
+}
 
 
 export interface AuditLog extends Model<typeof metadata.AuditLog> {
@@ -144,8 +152,8 @@ export class Event {
 export namespace Event {
   export namespace DataSources {
     
-    export class EventLoader implements DataSource<typeof metadata.Event.dataSources.eventLoader> {
-      readonly $metadata = metadata.Event.dataSources.eventLoader
+    export class BlobLoader implements DataSource<typeof metadata.Event.dataSources.blobLoader> {
+      readonly $metadata = metadata.Event.dataSources.blobLoader
     }
   }
 }

@@ -104,8 +104,72 @@ export const Announcement = domain.types.Announcement = {
     },
   },
   methods: {
+    uploadImage: {
+      name: "uploadImage",
+      displayName: "Upload Image",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+        id: {
+          name: "id",
+          displayName: "Primary Key",
+          type: "string",
+          role: "value",
+          get source() { return (domain.types.Announcement as ModelType & { name: "Announcement" }).props.announcementId },
+          rules: {
+            required: val => (val != null && val !== '') || "Primary Key is required.",
+          }
+        },
+        file: {
+          name: "file",
+          displayName: "File",
+          type: "file",
+          role: "value",
+          rules: {
+            required: val => val != null || "File is required.",
+          }
+        },
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "void",
+        role: "value",
+      },
+    },
+    updateImageUri: {
+      name: "updateImageUri",
+      displayName: "Update Image Uri",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+        id: {
+          name: "id",
+          displayName: "Primary Key",
+          type: "string",
+          role: "value",
+          get source() { return (domain.types.Announcement as ModelType & { name: "Announcement" }).props.announcementId },
+          rules: {
+            required: val => (val != null && val !== '') || "Primary Key is required.",
+          }
+        },
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "string",
+        role: "value",
+      },
+    },
   },
   dataSources: {
+    blobLoader: {
+      type: "dataSource",
+      name: "BlobLoader" as const,
+      displayName: "Blob Loader",
+      props: {
+      },
+    },
   },
 }
 export const AuditLog = domain.types.AuditLog = {
@@ -349,12 +413,69 @@ export const Event = domain.types.Event = {
     },
   },
   methods: {
+    uploadImage: {
+      name: "uploadImage",
+      displayName: "Upload Image",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+        id: {
+          name: "id",
+          displayName: "Primary Key",
+          type: "string",
+          role: "value",
+          get source() { return (domain.types.Event as ModelType & { name: "Event" }).props.eventId },
+          rules: {
+            required: val => (val != null && val !== '') || "Primary Key is required.",
+          }
+        },
+        file: {
+          name: "file",
+          displayName: "File",
+          type: "file",
+          role: "value",
+          rules: {
+            required: val => val != null || "File is required.",
+          }
+        },
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "void",
+        role: "value",
+      },
+    },
+    updateImageUri: {
+      name: "updateImageUri",
+      displayName: "Update Image Uri",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+        id: {
+          name: "id",
+          displayName: "Primary Key",
+          type: "string",
+          role: "value",
+          get source() { return (domain.types.Event as ModelType & { name: "Event" }).props.eventId },
+          rules: {
+            required: val => (val != null && val !== '') || "Primary Key is required.",
+          }
+        },
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "string",
+        role: "value",
+      },
+    },
   },
   dataSources: {
-    eventLoader: {
+    blobLoader: {
       type: "dataSource",
-      name: "EventLoader" as const,
-      displayName: "Event Loader",
+      name: "BlobLoader" as const,
+      displayName: "Blob Loader",
       props: {
       },
     },

@@ -7,7 +7,7 @@
   <v-row>
     <v-card class="my-5 mx-auto pa-3" v-for="event in events.$items" :key="event.$stableId"
       :to="`/eventview/${event.eventId}`">
-      <v-img aspect-ratio="10/10" :width="230" src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" cover />
+      <v-img v-if="event.imageUri" aspect-ratio="10/10" :width="230" :src="event.imageUri" cover />
       <v-card-title> {{ event.eventName }}</v-card-title>
       <v-card-subtitle> {{ event.location }}</v-card-subtitle>
       <v-card-subtitle>{{ `${event.dateTime?.toDateString()} ${event.dateTime?.toLocaleTimeString()}`
@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
 import { EventListViewModel } from '@/viewmodels.g';
+import { Event } from '@/models.g';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const display = ref(useDisplay());
@@ -38,6 +39,7 @@ const eventsPageSize = computed(() => {
 })
 events.$pageSize = eventsPageSize.value;
 events.$params.orderBy = "DateTime";
+events.$dataSource = new Event.DataSources.BlobLoader();
 events.$load();
 const eventsLength = computed(() => events.$pageCount!);
 

@@ -11,6 +11,29 @@ export interface AnnouncementViewModel extends $models.Announcement {
   imageUri: string | null;
 }
 export class AnnouncementViewModel extends ViewModel<$models.Announcement, $apiClients.AnnouncementApiClient, string> implements $models.Announcement  {
+  static DataSources = $models.Announcement.DataSources;
+  
+  public get uploadImage() {
+    const uploadImage = this.$apiClient.$makeCaller(
+      this.$metadata.methods.uploadImage,
+      (c, file: File | null) => c.uploadImage(this.$primaryKey, file),
+      () => ({file: null as File | null, }),
+      (c, args) => c.uploadImage(this.$primaryKey, args.file))
+    
+    Object.defineProperty(this, 'uploadImage', {value: uploadImage});
+    return uploadImage
+  }
+  
+  public get updateImageUri() {
+    const updateImageUri = this.$apiClient.$makeCaller(
+      this.$metadata.methods.updateImageUri,
+      (c) => c.updateImageUri(this.$primaryKey),
+      () => ({}),
+      (c, args) => c.updateImageUri(this.$primaryKey))
+    
+    Object.defineProperty(this, 'updateImageUri', {value: updateImageUri});
+    return updateImageUri
+  }
   
   constructor(initialData?: DeepPartial<$models.Announcement> | null) {
     super($metadata.Announcement, new $apiClients.AnnouncementApiClient(), initialData)
@@ -19,6 +42,7 @@ export class AnnouncementViewModel extends ViewModel<$models.Announcement, $apiC
 defineProps(AnnouncementViewModel, $metadata.Announcement)
 
 export class AnnouncementListViewModel extends ListViewModel<$models.Announcement, $apiClients.AnnouncementApiClient, AnnouncementViewModel> {
+  static DataSources = $models.Announcement.DataSources;
   
   constructor() {
     super($metadata.Announcement, new $apiClients.AnnouncementApiClient())
@@ -99,6 +123,28 @@ export interface EventViewModel extends $models.Event {
 }
 export class EventViewModel extends ViewModel<$models.Event, $apiClients.EventApiClient, string> implements $models.Event  {
   static DataSources = $models.Event.DataSources;
+  
+  public get uploadImage() {
+    const uploadImage = this.$apiClient.$makeCaller(
+      this.$metadata.methods.uploadImage,
+      (c, file: File | null) => c.uploadImage(this.$primaryKey, file),
+      () => ({file: null as File | null, }),
+      (c, args) => c.uploadImage(this.$primaryKey, args.file))
+    
+    Object.defineProperty(this, 'uploadImage', {value: uploadImage});
+    return uploadImage
+  }
+  
+  public get updateImageUri() {
+    const updateImageUri = this.$apiClient.$makeCaller(
+      this.$metadata.methods.updateImageUri,
+      (c) => c.updateImageUri(this.$primaryKey),
+      () => ({}),
+      (c, args) => c.updateImageUri(this.$primaryKey))
+    
+    Object.defineProperty(this, 'updateImageUri', {value: updateImageUri});
+    return updateImageUri
+  }
   
   constructor(initialData?: DeepPartial<$models.Event> | null) {
     super($metadata.Event, new $apiClients.EventApiClient(), initialData)
