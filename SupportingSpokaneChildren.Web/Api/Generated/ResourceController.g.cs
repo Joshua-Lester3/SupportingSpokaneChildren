@@ -43,7 +43,7 @@ namespace SupportingSpokaneChildren.Web.Api
         [HttpGet("list")]
         [AllowAnonymous]
         public virtual Task<ListResult<ResourceResponse>> List(
-            [FromQuery] ListParameters parameters, [FromQuery] int resourceCategoryId,
+            [FromQuery] ListParameters parameters,
             IDataSource<SupportingSpokaneChildren.Data.Models.Resource> dataSource)
             => ListImplementation(parameters, dataSource);
 
