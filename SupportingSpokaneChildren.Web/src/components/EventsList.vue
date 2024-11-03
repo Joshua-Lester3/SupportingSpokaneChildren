@@ -5,9 +5,19 @@
     </v-sheet>
   </v-card>
   <v-row>
-    <v-card v-for="event in events.$items" :key="event.$stableId" class="my-5 mx-auto pa-3"
-      :to="`/eventview/${event.eventId}`">
-      <v-img v-if="event.imageUri" aspect-ratio="10/10" :width="230" :src="event.imageUri" cover />
+    <v-card
+      v-for="event in events.$items"
+      :key="event.$stableId"
+      class="my-5 mx-auto pa-3"
+      :to="`/eventview/${event.eventId}`"
+    >
+      <v-img
+        v-if="event.imageUri"
+        aspect-ratio="10/10"
+        :width="230"
+        :src="event.imageUri"
+        cover
+      />
       <v-card-title> {{ event.eventName }}</v-card-title>
       <v-card-subtitle> {{ event.location }}</v-card-subtitle>
       <v-card-subtitle>{{
@@ -15,8 +25,13 @@
       }}</v-card-subtitle>
     </v-card>
   </v-row>
-  <v-pagination v-model="eventsPage" :length="eventsLength" @update:model-value="goto" @prev="movePrev"
-    @next="moveNext" />
+  <v-pagination
+    v-model="eventsPage"
+    :length="eventsLength"
+    @update:model-value="goto"
+    @prev="movePrev"
+    @next="moveNext"
+  />
 </template>
 
 <script setup lang="ts">

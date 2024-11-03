@@ -3,8 +3,11 @@
     <v-sheet color="primary">
       <v-card-title>Announcements</v-card-title>
     </v-sheet>
-    <v-list-item v-for="announcement in announcements.$items" :key="announcement.$stableId"
-      :to="`/announcementview/${announcement.announcementId}`">
+    <v-list-item
+      v-for="announcement in announcements.$items"
+      :key="announcement.$stableId"
+      :to="`/announcementview/${announcement.announcementId}`"
+    >
       <v-list-item-title>
         {{ announcement.title }}
       </v-list-item-title>
@@ -22,8 +25,13 @@
       </template>
     </v-list-item>
   </v-card>
-  <v-pagination v-model="announcementsPage" :length="announcementsLength" @update:model-value="goto" @prev="movePrev"
-    @next="moveNext" />
+  <v-pagination
+    v-model="announcementsPage"
+    :length="announcementsLength"
+    @update:model-value="goto"
+    @prev="movePrev"
+    @next="moveNext"
+  />
 </template>
 
 <script setup lang="ts">
