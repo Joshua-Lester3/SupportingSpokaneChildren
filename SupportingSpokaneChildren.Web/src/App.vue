@@ -43,13 +43,10 @@
     <v-navigation-drawer v-model="drawer">
       <v-list>
         <v-list-item to="/" prepend-icon="fa fa-home" title="Home" />
-        <v-list-item to="/widget" prepend-icon="fa fa-palette" title="Custom Page Example" />
         <v-divider></v-divider>
-        <v-list-item v-if="userInfo.roles?.includes('UserAdmin')" to="/admin/User" prepend-icon="fa fa-users"
-          title="Users" />
-        <v-list-item v-if="userInfo.roles?.includes('UserAdmin')" to="/admin/Role" prepend-icon="fa fa-id-card"
-          title="Roles" />
-        <v-list-item v-if="userInfo.roles?.includes('Moderator')" to="/admin" prepend-icon="fa fa-cogs" title="Admin" />
+        <v-list-item v-if="$can(Permission.UserAdmin)" to="/admin/User" prepend-icon="fa fa-users" title="Users" />
+        <v-list-item v-if="$can(Permission.UserAdmin)" to="/admin/Role" prepend-icon="fa fa-id-card" title="Roles" />
+        <v-list-item v-if="$can(Permission.Admin)" to="/admin" prepend-icon="fa fa-cogs" title="Admin" />
       </v-list>
 
       <div class="position-absolute left-0 bottom-0 px-1 text-caption text-grey text-center">

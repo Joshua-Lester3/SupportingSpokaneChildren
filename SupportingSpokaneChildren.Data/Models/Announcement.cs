@@ -1,4 +1,7 @@
-﻿namespace SupportingSpokaneChildren.Data.Models;
+﻿using IntelliTect.Coalesce.Api.Controllers;
+using SupportingSpokaneChildren.Data.Blob;
+
+namespace SupportingSpokaneChildren.Data.Models;
 
 [Create(nameof(Permission.Admin))]
 [Read(PermissionLevel = SecurityPermissionLevels.AllowAll)]
@@ -29,5 +32,23 @@ public class Announcement
             item.DatePosted = DateTime.UtcNow.AddHours(-7);
             return base.BeforeSave(kind, oldItem, item);
         }
+    }
+
+    [Coalesce]
+    public async Task<ItemResult> UploadImageAsync(AppDbContext db, [Inject] BlobStorageService service, IFile file)
+    {
+        ArgumentNullException.ThrowIfNull(file.Content);
+
+        if (file.Name is null) return "File name cannot be null.";
+        if (!file.Name.EndsWith(".jpg")
+            && !file.Name.EndsWith(".png")) return "File must be in JPEG or PNG format.";
+        var splitName = file.Name.Split(".");
+        string fileFormat = splitName[splitName.Length - 1];
+
+        using MemoryStream uploadFileStream = new MemoryStream(await file.Content.ReadAllBytesAsync());
+        BlobId = await service.Upload(BlobStorageService.Container.Announcements, uploadFileStream, fileFormat);
+        db.SaveChanges();
+
+        return true;
     }
 }

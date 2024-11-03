@@ -15,7 +15,7 @@ namespace SupportingSpokaneChildren.Web.Models
         private string _EventId;
         private string _EventName;
         private string _Description;
-        private System.DateTime? _DateTime;
+        private System.DateTimeOffset? _DateTime;
         private string _Location;
         private string _Link;
         private string _ImageUri;
@@ -35,7 +35,7 @@ namespace SupportingSpokaneChildren.Web.Models
             get => _Description;
             set { _Description = value; Changed(nameof(Description)); }
         }
-        public System.DateTime? DateTime
+        public System.DateTimeOffset? DateTime
         {
             get => _DateTime;
             set { _DateTime = value; Changed(nameof(DateTime)); }
@@ -104,7 +104,7 @@ namespace SupportingSpokaneChildren.Web.Models
         public string EventId { get; set; }
         public string EventName { get; set; }
         public string Description { get; set; }
-        public System.DateTime? DateTime { get; set; }
+        public System.DateTimeOffset? DateTime { get; set; }
         public string Location { get; set; }
         public string Link { get; set; }
         public string ImageUri { get; set; }

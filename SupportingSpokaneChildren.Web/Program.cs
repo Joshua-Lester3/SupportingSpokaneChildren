@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Azure.Identity;
 using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using SupportingSpokaneChildren.Data.Services;
+using SupportingSpokaneChildren.Data.Blob;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -73,7 +75,8 @@ services
 builder.ConfigureAuthentication();
 
 
-
+services.AddScoped<ResourceService>();
+services.AddScoped<BlobStorageService>();
 services.AddScoped<SecurityService>();
 
 

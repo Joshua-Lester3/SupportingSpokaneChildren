@@ -323,7 +323,6 @@ export const Event = domain.types.Event = {
       displayName: "Date Time",
       type: "date",
       dateKind: "datetime",
-      noOffset: true,
       role: "value",
     },
     location: {
@@ -352,6 +351,13 @@ export const Event = domain.types.Event = {
   methods: {
   },
   dataSources: {
+    eventLoader: {
+      type: "dataSource",
+      name: "EventLoader" as const,
+      displayName: "Event Loader",
+      props: {
+      },
+    },
   },
 }
 export const Resource = domain.types.Resource = {

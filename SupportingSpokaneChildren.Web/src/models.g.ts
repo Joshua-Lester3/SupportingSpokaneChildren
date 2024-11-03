@@ -141,6 +141,14 @@ export class Event {
     Object.assign(this, Event.map(data || {}));
   }
 }
+export namespace Event {
+  export namespace DataSources {
+    
+    export class EventLoader implements DataSource<typeof metadata.Event.dataSources.eventLoader> {
+      readonly $metadata = metadata.Event.dataSources.eventLoader
+    }
+  }
+}
 
 
 export interface Resource extends Model<typeof metadata.Resource> {

@@ -1,4 +1,7 @@
-﻿namespace SupportingSpokaneChildren.Data.Models;
+﻿using IntelliTect.Coalesce.Api.Controllers;
+using SupportingSpokaneChildren.Data.Blob;
+
+namespace SupportingSpokaneChildren.Data.Models;
 
 [Create(nameof(Permission.Admin))]
 [Read(PermissionLevel = SecurityPermissionLevels.AllowAll)]
