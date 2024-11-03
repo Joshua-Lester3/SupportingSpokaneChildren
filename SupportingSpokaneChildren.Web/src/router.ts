@@ -28,6 +28,11 @@ const router = createRouter({
       component: () => import("./views/EventView.vue"),
     },
     {
+      path: "/resourceview/:id",
+      props: true,
+      component: () => import("./views/ResourceView.vue"),
+    },
+    {
       path: "/user/:id",
       alias: "/admin/User/edit/:id", // Override coalesce admin page
       props: true,
