@@ -11,7 +11,7 @@
       <v-list-item-subtitle>
         {{ getAnnouncementDesc(announcement.description) }}
       </v-list-item-subtitle>
-      <template v-slot:append>
+      <template #append>
         <v-list-item-subtitle>
           {{ announcement.datePosted?.toDateString() }}
         </v-list-item-subtitle>
@@ -27,8 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { Announcement } from '@/models.g';
-import { AnnouncementListViewModel } from '@/viewmodels.g';
+import { AnnouncementListViewModel } from "@/viewmodels.g";
 
 const announcementsPage = ref(1);
 const announcements = new AnnouncementListViewModel();
@@ -60,11 +59,11 @@ function goto(pageNum: number) {
 
 function getAnnouncementDesc(desc: string | null) {
   if (desc === null) {
-    return '';
+    return "";
   }
   let result = desc.slice(0, 30);
   if (result.length === 30) {
-    result += '...';
+    result += "...";
   }
   return result;
 }

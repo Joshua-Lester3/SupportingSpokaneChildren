@@ -5,38 +5,43 @@
     </v-sheet>
   </v-card>
   <v-row>
-    <v-card class="my-5 mx-auto pa-3" v-for="event in events.$items" :key="event.$stableId"
+    <v-card v-for="event in events.$items" :key="event.$stableId" class="my-5 mx-auto pa-3"
       :to="`/eventview/${event.eventId}`">
       <v-img v-if="event.imageUri" aspect-ratio="10/10" :width="230" :src="event.imageUri" cover />
       <v-card-title> {{ event.eventName }}</v-card-title>
       <v-card-subtitle> {{ event.location }}</v-card-subtitle>
-      <v-card-subtitle>{{ `${event.dateTime?.toDateString()} ${event.dateTime?.toLocaleTimeString()}`
-        }}</v-card-subtitle>
+      <v-card-subtitle>{{
+        `${event.dateTime?.toDateString()} ${event.dateTime?.toLocaleTimeString()}`
+      }}</v-card-subtitle>
     </v-card>
-
   </v-row>
   <v-pagination v-model="eventsPage" :length="eventsLength" @update:model-value="goto" @prev="movePrev"
     @next="moveNext" />
 </template>
 
 <script setup lang="ts">
-import { EventListViewModel } from '@/viewmodels.g';
-import { Event } from '@/models.g';
-import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { EventListViewModel } from "@/viewmodels.g";
+import { Event } from "@/models.g";
+import { useDisplay } from "vuetify/lib/framework.mjs";
 
 const display = ref(useDisplay());
 const eventsPage = ref(1);
 const events = new EventListViewModel();
 const eventsPageSize = computed(() => {
   switch (display.value.name) {
-    case 'xs': return 1;
-    case 'sm':
-    case 'md': return 2;
-    case 'lg': return 3;
-    case 'xl': return 4;
-    case 'xxl': return 5;
+    case "xs":
+      return 1;
+    case "sm":
+    case "md":
+      return 2;
+    case "lg":
+      return 3;
+    case "xl":
+      return 4;
+    case "xxl":
+      return 5;
   }
-})
+});
 events.$pageSize = eventsPageSize.value;
 events.$params.orderBy = "DateTime";
 events.$dataSource = new Event.DataSources.BlobLoader();
@@ -46,7 +51,7 @@ const eventsLength = computed(() => events.$pageCount!);
 watch(eventsPageSize, () => {
   events.$pageSize = eventsPageSize.value;
   events.$load();
-})
+});
 
 function movePrev() {
   if (events.$hasPreviousPage) {
@@ -67,16 +72,5 @@ function goto(pageNum: number) {
     events.$page = pageNum;
     events.$load();
   }
-}
-
-function getEventsDesc(desc: string | null) {
-  if (desc === null) {
-    return '';
-  }
-  let result = desc.slice(0, 30);
-  if (result.length === 30) {
-    result += '...';
-  }
-  return result;
 }
 </script>

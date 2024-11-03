@@ -5,14 +5,21 @@
         <v-card>
           <v-card-text>
             <v-list compact>
-              <v-list-item v-if="$can(Permission.ViewAuditLogs)" title="Audit Logs"
-                subtitle="Logs of each data change made in the application." to="/admin/audit"
-                prepend-icon="fa fa-clipboard-list">
+              <v-list-item
+                v-if="$can(Permission.ViewAuditLogs)"
+                title="Audit Logs"
+                subtitle="Logs of each data change made in the application."
+                to="/admin/audit"
+                prepend-icon="fa fa-clipboard-list"
+              >
               </v-list-item>
               <v-divider class="my-2"></v-divider>
-              <v-list-item title="Coalesce Security Overview"
+              <v-list-item
+                title="Coalesce Security Overview"
                 subtitle="An overview of how each property, method, and endpoint is served by Coalesce."
-                href="/coalesce-security" prepend-icon="fa fa-lock-open">
+                href="/coalesce-security"
+                prepend-icon="fa fa-lock-open"
+              >
               </v-list-item>
             </v-list>
           </v-card-text>
@@ -22,13 +29,21 @@
         <v-card>
           <v-card-text>
             <v-list density="compact">
-              <v-list-item v-for="type in adminTypes" :key="type.name" :title="type.displayName"
-                :subtitle="type.description" :to="{
+              <v-list-item
+                v-for="type in adminTypes"
+                :key="type.name"
+                :title="type.displayName"
+                :subtitle="type.description"
+                :to="{
                   name: 'coalesce-admin-list',
                   params: { type: type.name },
-                }">
+                }"
+              >
                 <template #prepend>
-                  <v-avatar color="surface-variant" class="font-weight-bold ml-n1">
+                  <v-avatar
+                    color="surface-variant"
+                    class="font-weight-bold ml-n1"
+                  >
                     {{
                       type.displayName
                         .split(" ")
@@ -63,12 +78,13 @@ const excludedTypes: Array<keyof typeof $metadata.types> = [
 const adminTypes = Object.values(($metadata as Domain).types).filter(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore may be errors if the project has only model or only object types
-  (t): t is ModelType => t.type == "model" && !excludedTypes.includes(t.name) && checkPermission(t),
+  (t): t is ModelType =>
+    t.type == "model" && !excludedTypes.includes(t.name) && checkPermission(t),
 );
 
 function checkPermission(type: ModelType) {
-  if (type.displayName === 'Role' || type.displayName === 'User') {
-    let bool = userInfo.value.permissions?.includes('UserAdmin');
+  if (type.displayName === "Role" || type.displayName === "User") {
+    const bool = userInfo.value.permissions?.includes("UserAdmin");
     return bool;
   }
   return true;

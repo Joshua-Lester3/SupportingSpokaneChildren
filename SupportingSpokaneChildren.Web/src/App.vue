@@ -11,13 +11,21 @@
       <v-menu bottom offset-y>
         <template #activator="{ props }">
           <div v-bind="props">
-            <UserAvatar v-if="$userInfo.email" :user="$userInfo" class="mr-2 cursor-pointer" />
+            <UserAvatar
+              v-if="$userInfo.email"
+              :user="$userInfo"
+              class="mr-2 cursor-pointer"
+            />
             <v-btn v-else icon="fa-solid fa-cog" />
           </div>
         </template>
         <v-list min-width="300px">
-          <v-list-item v-if="$userInfo.email" :title="$userInfo.fullName!" :subtitle="$userInfo.userName!"
-            :to="`/user/${$userInfo.id}`">
+          <v-list-item
+            v-if="$userInfo.email"
+            :title="$userInfo.fullName!"
+            :subtitle="$userInfo.userName!"
+            :to="`/user/${$userInfo.id}`"
+          >
             <template #prepend>
               <UserAvatar :user="$userInfo" class="mr-2 ml-n1" />
             </template>
@@ -31,12 +39,24 @@
           <v-divider class="mt-1" />
 
           <v-list-item prepend-icon="fa fa-moon">
-            <v-switch v-model="theme" label="Dark Mode" true-value="dark" false-value="light" hide-details class="ml-2"
-              density="compact" />
+            <v-switch
+              v-model="theme"
+              label="Dark Mode"
+              true-value="dark"
+              false-value="light"
+              hide-details
+              class="ml-2"
+              density="compact"
+            />
           </v-list-item>
 
           <v-divider />
-          <v-list-item v-if="$userInfo.email" href="/sign-out" prepend-icon="fa fa-sign-out" title="Log Out" />
+          <v-list-item
+            v-if="$userInfo.email"
+            href="/sign-out"
+            prepend-icon="fa fa-sign-out"
+            title="Log Out"
+          />
         </v-list>
       </v-menu>
     </v-app-bar>
@@ -44,12 +64,29 @@
       <v-list>
         <v-list-item to="/" prepend-icon="fa fa-home" title="Home" />
         <v-divider></v-divider>
-        <v-list-item v-if="$can(Permission.UserAdmin)" to="/admin/User" prepend-icon="fa fa-users" title="Users" />
-        <v-list-item v-if="$can(Permission.UserAdmin)" to="/admin/Role" prepend-icon="fa fa-id-card" title="Roles" />
-        <v-list-item v-if="$can(Permission.Admin)" to="/admin" prepend-icon="fa fa-cogs" title="Admin" />
+        <v-list-item
+          v-if="$can(Permission.UserAdmin)"
+          to="/admin/User"
+          prepend-icon="fa fa-users"
+          title="Users"
+        />
+        <v-list-item
+          v-if="$can(Permission.UserAdmin)"
+          to="/admin/Role"
+          prepend-icon="fa fa-id-card"
+          title="Roles"
+        />
+        <v-list-item
+          v-if="$can(Permission.Admin)"
+          to="/admin"
+          prepend-icon="fa fa-cogs"
+          title="Admin"
+        />
       </v-list>
 
-      <div class="position-absolute left-0 bottom-0 px-1 text-caption text-grey text-center">
+      <div
+        class="position-absolute left-0 bottom-0 px-1 text-caption text-grey text-center"
+      >
         {{ buildDate }}
       </div>
     </v-navigation-drawer>
@@ -58,7 +95,11 @@
       <!-- https://stackoverflow.com/questions/52847979/what-is-router-view-key-route-fullpath -->
       <router-view v-slot="{ Component, route }">
         <transition name="router-transition" mode="out-in" appear>
-          <Forbidden v-if="isForbidden" key="$forbidden" :permissions="routeMeta?.permissions" />
+          <Forbidden
+            v-if="isForbidden"
+            key="$forbidden"
+            :permissions="routeMeta?.permissions"
+          />
           <component :is="Component" v-else :key="route.path" />
         </transition>
       </router-view>
@@ -79,8 +120,8 @@ const router = useRouter();
 const { userInfo } = useUser();
 const vuetifyTheme = useTheme();
 
-console.log('UserAdmin' in userInfo.value.roles!);
-console.log(userInfo.value.roles?.includes('UserAdmin'));
+console.log("UserAdmin" in userInfo.value.roles!);
+console.log(userInfo.value.roles?.includes("UserAdmin"));
 console.log(userInfo.value.roles!);
 
 const theme = useLocalStorage(
@@ -93,8 +134,8 @@ const routeMeta = computed(() => {
   const route = router.currentRoute.value;
   return route?.meta as
     | {
-      permissions?: Permission[];
-    }
+        permissions?: Permission[];
+      }
     | null
     | undefined;
 });

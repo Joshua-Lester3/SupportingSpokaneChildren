@@ -16,15 +16,16 @@
 </template>
 
 <script setup lang="ts">
-import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { useDisplay } from "vuetify/lib/framework.mjs";
 
 useTitle("Home");
 const display = ref(useDisplay());
 
 const isMobile = computed<boolean>(() => {
   switch (display.value.name) {
-    case 'xs': return true;
+    case "xs":
+      return true;
   }
   return false;
-})
+});
 </script>
