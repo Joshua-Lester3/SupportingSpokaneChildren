@@ -91,5 +91,156 @@ namespace SupportingSpokaneChildren.Web.Api
             IBehaviors<SupportingSpokaneChildren.Data.Models.Event> behaviors,
             IDataSource<SupportingSpokaneChildren.Data.Models.Event> dataSource)
             => DeleteImplementation(id, new DataSourceParameters(), dataSource, behaviors);
+
+        // Methods from data class exposed through API Controller.
+
+        /// <summary>
+        /// Method: UploadImageAsync
+        /// </summary>
+        [HttpPost("UploadImage")]
+        [HttpPost("UploadImageAsync")]
+        [Authorize]
+        [Consumes("application/x-www-form-urlencoded", "multipart/form-data")]
+        public virtual async Task<ItemResult> UploadImage(
+            [FromServices] IDataSourceFactory dataSourceFactory,
+            [FromServices] SupportingSpokaneChildren.Data.Blob.BlobStorageService service,
+            [FromForm(Name = "id")] string id,
+            Microsoft.AspNetCore.Http.IFormFile file)
+        {
+            var _params = new
+            {
+                Id = id,
+                File = file == null ? null : new IntelliTect.Coalesce.Models.File { Name = file.FileName, ContentType = file.ContentType, Length = file.Length, Content = file.OpenReadStream() }
+            };
+
+            var dataSource = dataSourceFactory.GetDataSource<SupportingSpokaneChildren.Data.Models.Event, SupportingSpokaneChildren.Data.Models.Event>("Default");
+            var itemResult = await dataSource.GetItemAsync(_params.Id, new DataSourceParameters());
+            if (!itemResult.WasSuccessful)
+            {
+                return new ItemResult(itemResult);
+            }
+            var item = itemResult.Object;
+            if (Context.Options.ValidateAttributesForMethods)
+            {
+                var _validationResult = ItemResult.FromParameterValidation(
+                    GeneratedForClassViewModel!.MethodByName("UploadImageAsync"), _params, HttpContext.RequestServices);
+                if (!_validationResult.WasSuccessful) return _validationResult;
+            }
+
+            var _methodResult = await item.UploadImageAsync(
+                Db,
+                service,
+                _params.File
+            );
+            var _result = new ItemResult(_methodResult);
+            return _result;
+        }
+
+        public class EventUploadImageParameters
+        {
+            public string Id { get; set; }
+            public IntelliTect.Coalesce.Models.FileParameter File { get; set; }
+        }
+
+        /// <summary>
+        /// Method: UploadImageAsync
+        /// </summary>
+        [HttpPost("UploadImage")]
+        [HttpPost("UploadImageAsync")]
+        [Authorize]
+        [Consumes("application/json")]
+        public virtual async Task<ItemResult> UploadImage(
+            [FromServices] IDataSourceFactory dataSourceFactory,
+            [FromServices] SupportingSpokaneChildren.Data.Blob.BlobStorageService service,
+            [FromBody] EventUploadImageParameters _params
+        )
+        {
+            var dataSource = dataSourceFactory.GetDataSource<SupportingSpokaneChildren.Data.Models.Event, SupportingSpokaneChildren.Data.Models.Event>("Default");
+            var itemResult = await dataSource.GetItemAsync(_params.Id, new DataSourceParameters());
+            if (!itemResult.WasSuccessful)
+            {
+                return new ItemResult(itemResult);
+            }
+            var item = itemResult.Object;
+            if (Context.Options.ValidateAttributesForMethods)
+            {
+                var _validationResult = ItemResult.FromParameterValidation(
+                    GeneratedForClassViewModel!.MethodByName("UploadImageAsync"), _params, HttpContext.RequestServices);
+                if (!_validationResult.WasSuccessful) return _validationResult;
+            }
+
+            var _methodResult = await item.UploadImageAsync(
+                Db,
+                service,
+                _params.File
+            );
+            var _result = new ItemResult(_methodResult);
+            return _result;
+        }
+
+        /// <summary>
+        /// Method: UpdateImageUri
+        /// </summary>
+        [HttpPost("UpdateImageUri")]
+        [Authorize]
+        [Consumes("application/x-www-form-urlencoded", "multipart/form-data")]
+        public virtual async Task<ItemResult<string>> UpdateImageUri(
+            [FromServices] IDataSourceFactory dataSourceFactory,
+            [FromServices] SupportingSpokaneChildren.Data.Blob.BlobStorageService service,
+            [FromForm(Name = "id")] string id)
+        {
+            var _params = new
+            {
+                Id = id
+            };
+
+            var dataSource = dataSourceFactory.GetDataSource<SupportingSpokaneChildren.Data.Models.Event, SupportingSpokaneChildren.Data.Models.Event>("Default");
+            var itemResult = await dataSource.GetItemAsync(_params.Id, new DataSourceParameters());
+            if (!itemResult.WasSuccessful)
+            {
+                return new ItemResult<string>(itemResult);
+            }
+            var item = itemResult.Object;
+            var _methodResult = item.UpdateImageUri(
+                Db,
+                service
+            );
+            var _result = new ItemResult<string>();
+            _result.Object = _methodResult;
+            return _result;
+        }
+
+        public class EventUpdateImageUriParameters
+        {
+            public string Id { get; set; }
+        }
+
+        /// <summary>
+        /// Method: UpdateImageUri
+        /// </summary>
+        [HttpPost("UpdateImageUri")]
+        [Authorize]
+        [Consumes("application/json")]
+        public virtual async Task<ItemResult<string>> UpdateImageUri(
+            [FromServices] IDataSourceFactory dataSourceFactory,
+            [FromServices] SupportingSpokaneChildren.Data.Blob.BlobStorageService service,
+            [FromBody] EventUpdateImageUriParameters _params
+        )
+        {
+            var dataSource = dataSourceFactory.GetDataSource<SupportingSpokaneChildren.Data.Models.Event, SupportingSpokaneChildren.Data.Models.Event>("Default");
+            var itemResult = await dataSource.GetItemAsync(_params.Id, new DataSourceParameters());
+            if (!itemResult.WasSuccessful)
+            {
+                return new ItemResult<string>(itemResult);
+            }
+            var item = itemResult.Object;
+            var _methodResult = item.UpdateImageUri(
+                Db,
+                service
+            );
+            var _result = new ItemResult<string>();
+            _result.Object = _methodResult;
+            return _result;
+        }
     }
 }

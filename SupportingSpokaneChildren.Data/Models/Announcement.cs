@@ -51,4 +51,46 @@ public class Announcement
 
         return true;
     }
+
+    [Coalesce]
+    public string? UpdateImageUri(AppDbContext db, [Inject] BlobStorageService service)
+    {
+        if (BlobId is not null)
+        {
+            ImageUri = service.GetImageUri(BlobId);
+        }
+        else
+        {
+            ImageUri = null;
+        }
+        db.SaveChanges();
+        return ImageUri;
+    }
+
+    public class BlobLoader : StandardDataSource<Announcement, AppDbContext>
+    {
+        public BlobStorageService _Service { get; set; }
+        public BlobLoader(CrudContext<AppDbContext> context, BlobStorageService service) : base(context) { _Service = service; }
+
+        public override IQueryable<Announcement> GetQuery(IDataSourceParameters parameters)
+        {
+            var list = Db.Announcements.ToList();
+            foreach (var item in list)
+            {
+                item.UpdateImageUri(Db, _Service);
+            }
+            return base.GetQuery(parameters);
+        }
+
+        public override async Task<ItemResult<Announcement>> GetItemAsync(object id, IDataSourceParameters parameters)
+        {
+            string newId = (string)id;
+            var e = await Db.Announcements.FirstOrDefaultAsync(e => e.AnnouncementId == newId);
+            if (e is not null)
+            {
+                e.UpdateImageUri(Db, _Service);
+            }
+            return await base.GetItemAsync(id, parameters);
+        }
+    }
 }

@@ -33,7 +33,7 @@
           <p>{{ event.link }}</p>
         </v-card-text>
       </div>
-      <v-img class="mx-auto mt-2 mb-5" :width="400" src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" cover />
+      <v-img v-if="event.imageUri" class="mx-auto mt-2 mb-5" :width="400" :src="event.imageUri" cover />
     </v-card>
   </v-container>
 </template>

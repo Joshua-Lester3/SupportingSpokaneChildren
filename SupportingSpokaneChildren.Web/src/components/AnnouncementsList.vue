@@ -27,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+import { Announcement } from '@/models.g';
 import { AnnouncementListViewModel } from '@/viewmodels.g';
 
 const announcementsPage = ref(1);

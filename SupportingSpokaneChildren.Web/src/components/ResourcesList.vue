@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ResourceCategoryListViewModel } from '@/viewmodels.g';
+import { ResourceCategoryListViewModel, ResourceListViewModel } from '@/viewmodels.g';
 
 const open = ref([]);
 const resourceCategories = new ResourceCategoryListViewModel();

@@ -5,6 +5,23 @@ import type { AxiosPromise, AxiosRequestConfig, ItemResult, ListResult } from 'c
 
 export class AnnouncementApiClient extends ModelApiClient<$models.Announcement> {
   constructor() { super($metadata.Announcement) }
+  public uploadImage(id: string | null, file: File | null, $config?: AxiosRequestConfig): AxiosPromise<ItemResult<void>> {
+    const $method = this.$metadata.methods.uploadImage
+    const $params =  {
+      id,
+      file,
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
+  public updateImageUri(id: string | null, $config?: AxiosRequestConfig): AxiosPromise<ItemResult<string>> {
+    const $method = this.$metadata.methods.updateImageUri
+    const $params =  {
+      id,
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
 }
 
 
@@ -20,6 +37,23 @@ export class AuditLogPropertyApiClient extends ModelApiClient<$models.AuditLogPr
 
 export class EventApiClient extends ModelApiClient<$models.Event> {
   constructor() { super($metadata.Event) }
+  public uploadImage(id: string | null, file: File | null, $config?: AxiosRequestConfig): AxiosPromise<ItemResult<void>> {
+    const $method = this.$metadata.methods.uploadImage
+    const $params =  {
+      id,
+      file,
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
+  public updateImageUri(id: string | null, $config?: AxiosRequestConfig): AxiosPromise<ItemResult<string>> {
+    const $method = this.$metadata.methods.updateImageUri
+    const $params =  {
+      id,
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
 }
 
 
