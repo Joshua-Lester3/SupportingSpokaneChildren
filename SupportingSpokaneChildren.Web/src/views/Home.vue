@@ -3,12 +3,10 @@
     <v-row>
       <v-col cols="12" md="6">
         <AnnouncementsList />
+        <ResourcesList />
       </v-col>
       <v-col cols="12" md="6">
         <EventsList />
-      </v-col>
-      <v-col cols="12" md="6">
-        <ResourcesList />
       </v-col>
     </v-row>
   </v-container>
