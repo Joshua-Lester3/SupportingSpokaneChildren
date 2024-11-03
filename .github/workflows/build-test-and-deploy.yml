@@ -26,7 +26,7 @@ permissions:
 #
 # 3. Change these variables for your configuration:
 env:
-  AZURE_WEBAPP_NAME: SupportingSpokaneChildren # set this to your app service name
+  AZURE_WEBAPP_NAME: SSC # set this to your app service name
 
 jobs:
   build-and-test:
