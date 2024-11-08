@@ -41,7 +41,7 @@ public class Announcement
 
         if (file.Name is null) return "File name cannot be null.";
         if (!file.Name.EndsWith(".jpg")
-            && !file.Name.EndsWith(".png")) return "File must be in JPEG or PNG format.";
+            && !file.Name.EndsWith(".png") && !file.Name.EndsWith(".jpeg")) return "File must be in JPEG or PNG format.";
         var splitName = file.Name.Split(".");
         string fileFormat = splitName[splitName.Length - 1];
 
