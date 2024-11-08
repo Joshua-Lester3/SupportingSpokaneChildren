@@ -64,12 +64,12 @@ public class Event
 
         public override IQueryable<Event> GetQuery(IDataSourceParameters parameters)
         {
-            var list = Db.Events.ToList();
+            var list = base.GetQuery(parameters).ToList();
             foreach (var item in list)
             {
                 item.UpdateImageUri(Db, _Service);
             }
-            return base.GetQuery(parameters);
+            return base.GetQuery(parameters).Where(e => e.DateTime > DateTimeOffset.UtcNow);
         }
 
         public override async Task<ItemResult<Event>> GetItemAsync(object id, IDataSourceParameters parameters)

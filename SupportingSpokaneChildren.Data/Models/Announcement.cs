@@ -74,7 +74,7 @@ public class Announcement
 
         public override IQueryable<Announcement> GetQuery(IDataSourceParameters parameters)
         {
-            var list = Db.Announcements.ToList();
+            var list = base.GetQuery(parameters).ToList();
             foreach (var item in list)
             {
                 item.UpdateImageUri(Db, _Service);
@@ -84,13 +84,12 @@ public class Announcement
 
         public override async Task<ItemResult<Announcement>> GetItemAsync(object id, IDataSourceParameters parameters)
         {
-            string newId = (string)id;
-            var e = await Db.Announcements.FirstOrDefaultAsync(e => e.AnnouncementId == newId);
-            if (e is not null)
+            var result = await base.GetItemAsync(id, parameters);
+            if (result.Object is not null)
             {
-                e.UpdateImageUri(Db, _Service);
+                result.Object.UpdateImageUri(Db, _Service);
             }
-            return await base.GetItemAsync(id, parameters);
+            return result;
         }
     }
 }
