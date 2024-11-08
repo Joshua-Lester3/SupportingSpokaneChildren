@@ -1,6 +1,6 @@
 # Supporting Spokane Children
 
-Project built during Gonzaga's 2024 Hackathon. Available at (insert url).
+Project built during Gonzaga's 2024 Hackathon. Available at [https://supportingspokanechildren.net/](https://supportingspokanechildren.net/).
 
 ## Functionality
 
